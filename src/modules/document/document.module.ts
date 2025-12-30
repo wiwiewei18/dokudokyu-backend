@@ -6,6 +6,8 @@ import { PostgresDocumentRepo } from './infra/repos/postgresDocument.repo';
 import { IStorageServiceToken } from 'src/shared/infra/storage/storage.service.interface';
 import { R2StorageService } from 'src/shared/infra/storage/cloudflare/r2Storage.service';
 import { DocumentController } from './api/document.controller';
+import { IJwtServiceToken } from '../../shared/infra/auth/jwt/jwt.service.interface';
+import { JwtService } from 'src/shared/infra/auth/jwt/jwt.service';
 
 @Module({
   imports: [DatabaseModule],
@@ -18,6 +20,10 @@ import { DocumentController } from './api/document.controller';
     {
       provide: IStorageServiceToken,
       useClass: R2StorageService,
+    },
+    {
+      provide: IJwtServiceToken,
+      useClass: JwtService,
     },
     RequestDocumentUploadUseCase,
   ],
