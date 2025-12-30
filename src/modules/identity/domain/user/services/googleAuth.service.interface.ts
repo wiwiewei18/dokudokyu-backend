@@ -1,3 +1,5 @@
+export const IGoogleAuthServiceToken = Symbol('IGoogleAuthService');
+
 export interface IGoogleAuthService {
   verifyToken(idToken: string): Promise<{
     googleId: string;

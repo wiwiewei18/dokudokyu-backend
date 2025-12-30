@@ -1,18 +1,30 @@
 import { User } from '../../domain/user/aggregates/user.aggregate';
 import { Email } from '../../domain/user/valueObjects/email.vo';
 import { Name } from '../../domain/user/valueObjects/name.vo';
-import { IUserRepo } from '../../domain/user/repos/user.repo.interface';
-import { IGoogleAuthService } from '../../domain/user/services/googleAuth.service.interface';
-import { IJwtService } from '../../domain/user/services/jwt.service.interface';
+import {
+  IUserRepoToken,
+  type IUserRepo,
+} from '../../domain/user/repos/user.repo.interface';
+import {
+  IGoogleAuthServiceToken,
+  type IGoogleAuthService,
+} from '../../domain/user/services/googleAuth.service.interface';
+import {
+  IJwtServiceToken,
+  type IJwtService,
+} from '../../domain/user/services/jwt.service.interface';
+import { Inject, Injectable } from '@nestjs/common';
 
+@Injectable()
 export class SignInWithGoogleUseCase {
   constructor(
-    private readonly userRepo: IUserRepo,
+    @Inject(IUserRepoToken) private readonly userRepo: IUserRepo,
+    @Inject(IGoogleAuthServiceToken)
     private readonly googleAuthService: IGoogleAuthService,
-    private readonly jwtService: IJwtService,
+    @Inject(IJwtServiceToken) private readonly jwtService: IJwtService,
   ) {}
 
-  async execute(idToken: string): Promise<{ user: User; accessToken: string }> {
+  async execute(idToken: string): Promise<{ accessToken: string }> {
     const googleUser = await this.googleAuthService.verifyToken(idToken);
 
     let user = await this.userRepo.findByGoogleId(googleUser.googleId);
@@ -32,6 +44,6 @@ export class SignInWithGoogleUseCase {
 
     const accessToken = this.jwtService.sign({ userId: user.id });
 
-    return { user, accessToken };
+    return { accessToken };
   }
 }
