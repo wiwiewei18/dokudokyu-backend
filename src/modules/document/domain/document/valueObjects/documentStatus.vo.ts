@@ -1,6 +1,6 @@
 import { ValueObject } from 'src/shared/domain/base.vo';
 
-type DocumentStatusType =
+export type DocumentStatusType =
   | 'PENDING'
   | 'UPLOADED'
   | 'PROCESSING'
@@ -12,6 +12,10 @@ export class DocumentStatus extends ValueObject<{
 }> {
   private constructor(status: DocumentStatusType) {
     super({ value: status });
+  }
+
+  public static create(documentStatus: DocumentStatusType): DocumentStatus {
+    return new DocumentStatus(documentStatus);
   }
 
   public static pending(): DocumentStatus {
