@@ -11,4 +11,8 @@ export default () => ({
   postgres: {
     url: process.env.POSTGRES_URL,
   },
+  cors: {
+    origins: process.env.CORS_ORIGINS?.split(',') || [],
+    credentials: process.env.CORS_CREDENTIALS,
+  },
 });
