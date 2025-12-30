@@ -15,4 +15,10 @@ export default () => ({
     origins: process.env.CORS_ORIGINS?.split(',') || [],
     credentials: process.env.CORS_CREDENTIALS,
   },
+  r2: {
+    accountId: process.env.R2_ACCOUNT_ID,
+    accessKeyId: process.env.R2_ACCESS_KEY_ID,
+    secretAccessKey: process.env.R2_SECRET_ACCESS_KEY,
+    bucketName: process.env.R2_BUCKET_NAME,
+  },
 });
