@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { IdentityController } from './api/identity.controller';
-import { SignInWithGoogleUseCase } from './app/useCases/signInWithGoogle.usecase';
+import { SignInWithGoogleUseCase } from './app/useCases/signInWithGoogle.useCase';
 import { JwtService } from './infra/services/jwt.service';
 import { GoogleAuthService } from './infra/services/googleAuth.service';
 import { PostgresUserRepo } from './infra/repos/postgresUser.repo';

@@ -1,6 +1,6 @@
 import { Body, Controller, Post } from '@nestjs/common';
-import { SignInWithGoogleUseCase } from '../app/useCases/signInWithGoogle.usecase';
 import { SignInWithGoogleDto } from './dtos/signInWithGoogle.dto';
+import { SignInWithGoogleUseCase } from '../app/useCases/signInWithGoogle.useCase';
 
 @Controller('identity')
 export class IdentityController {
