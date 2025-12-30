@@ -1,3 +1,4 @@
+// NOTE: make the secret required
 export default () => ({
   jwt: {
     secret: process.env.JWT_SECRET,

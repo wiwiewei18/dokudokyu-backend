@@ -30,10 +30,7 @@ export class SignInWithGoogleUseCase {
       await this.userRepo.save(user);
     }
 
-    const accessToken = this.jwtService.sign({
-      sub: user.id,
-      email: user.email.value,
-    });
+    const accessToken = this.jwtService.sign({ userId: user.id });
 
     return { user, accessToken };
   }
