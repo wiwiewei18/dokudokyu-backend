@@ -40,6 +40,23 @@ export class User extends AggregateRoot<string> {
     return user;
   }
 
+  static fromPersistence(props: {
+    id: string;
+    googleId: string;
+    email: Email;
+    name: Name;
+    pictureUrl?: string;
+    createdAt: Date;
+  }): User {
+    return new User(props.id, {
+      googleId: props.googleId,
+      email: props.email,
+      name: props.name,
+      pictureUrl: props.pictureUrl,
+      createdAt: props.createdAt,
+    });
+  }
+
   get id(): string {
     return this._id;
   }
