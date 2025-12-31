@@ -10,6 +10,6 @@ export class DocumentUploadedEvent extends DomainEvent {
   }
 
   getEventName(): string {
-    return 'DocumentUploaded';
+    return 'document.uploaded';
   }
 }
