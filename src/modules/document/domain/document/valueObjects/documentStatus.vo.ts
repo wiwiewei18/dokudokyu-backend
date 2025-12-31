@@ -22,6 +22,10 @@ export class DocumentStatus extends ValueObject<{
     return new DocumentStatus('PENDING');
   }
 
+  public isPending(): boolean {
+    return this.props.value === 'PENDING';
+  }
+
   public static uploaded(): DocumentStatus {
     return new DocumentStatus('UPLOADED');
   }

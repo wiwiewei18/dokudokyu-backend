@@ -4,6 +4,7 @@ import { DocumentName } from '../valueObjects/documentName.vo';
 import { DocumentType } from '../valueObjects/documentType.vo';
 import { DocumentSize } from '../valueObjects/documentSize.vo';
 import { DocumentStatus } from '../valueObjects/documentStatus.vo';
+import { DocumentUploadedEvent } from '../events/documentUploaded.event';
 
 interface DocumentProps {
   userId: UserId;
@@ -99,5 +100,20 @@ export class Document extends AggregateRoot<string> {
 
   get createdAt(): Date {
     return this.props.createdAt;
+  }
+
+  public completeUpload(): void {
+    if (!this.props.status.isPending()) {
+      throw new Error('Document is not in pending status');
+    }
+    this.props.status = DocumentStatus.completed();
+
+    this.addDomainEvent(
+      new DocumentUploadedEvent(
+        this._id,
+        this.props.storagePath,
+        this.props.type.value,
+      ),
+    );
   }
 }

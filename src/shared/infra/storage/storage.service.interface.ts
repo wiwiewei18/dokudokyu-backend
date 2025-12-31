@@ -5,4 +5,5 @@ export interface IStorageService {
     storagePath: string,
     contentType: string,
   ): Promise<string>;
+  checkFileExists(storagePath: string): Promise<boolean>;
 }
