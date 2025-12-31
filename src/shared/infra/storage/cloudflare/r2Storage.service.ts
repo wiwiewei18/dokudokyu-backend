@@ -1,6 +1,8 @@
 import { ConfigService } from '@nestjs/config';
 import { IStorageService } from '../storage.service.interface';
 import {
+  HeadObjectCommand,
+  HeadObjectCommandInput,
   PutObjectCommand,
   PutObjectCommandInput,
   S3Client,
@@ -44,5 +46,23 @@ export class R2StorageService implements IStorageService {
 
     const url = await getSignedUrl(this.s3Client, command, { expiresIn: 300 }); // 5 minutes
     return url;
+  }
+
+  async checkFileExists(storagePath: string): Promise<boolean> {
+    const commandInput: HeadObjectCommandInput = {
+      Bucket: this.bucket,
+      Key: storagePath,
+    };
+    const command = new HeadObjectCommand(commandInput);
+
+    try {
+      await this.s3Client.send(command);
+      return true;
+    } catch (err: any) {
+      if (err.name === 'NotFound' || err.$metadata?.httpStatusCode === 404) {
+        return false;
+      }
+      throw err;
+    }
   }
 }

@@ -8,9 +8,11 @@ import { R2StorageService } from 'src/shared/infra/storage/cloudflare/r2Storage.
 import { DocumentController } from './api/document.controller';
 import { IJwtServiceToken } from '../../shared/infra/auth/jwt/jwt.service.interface';
 import { JwtService } from 'src/shared/infra/auth/jwt/jwt.service';
+import { CompleteDocumentUploadUseCase } from './app/useCases/completeDocumentUpload.useCase';
+import { EventBusModule } from 'src/shared/infra/eventBus/eventBus.module';
 
 @Module({
-  imports: [DatabaseModule],
+  imports: [DatabaseModule, EventBusModule.forRoot('document.exchange')],
   controllers: [DocumentController],
   providers: [
     {
@@ -26,6 +28,7 @@ import { JwtService } from 'src/shared/infra/auth/jwt/jwt.service';
       useClass: JwtService,
     },
     RequestDocumentUploadUseCase,
+    CompleteDocumentUploadUseCase,
   ],
 })
 export class DocumentModule {}

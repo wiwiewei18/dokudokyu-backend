@@ -21,4 +21,7 @@ export default () => ({
     secretAccessKey: process.env.R2_SECRET_ACCESS_KEY,
     bucketName: process.env.R2_BUCKET_NAME,
   },
+  rabbitmq: {
+    uri: process.env.RABBITMQ_URI,
+  },
 });

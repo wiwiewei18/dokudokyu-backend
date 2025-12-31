@@ -106,7 +106,7 @@ export class Document extends AggregateRoot<string> {
     if (!this.props.status.isPending()) {
       throw new Error('Document is not in pending status');
     }
-    this.props.status = DocumentStatus.completed();
+    this.props.status = DocumentStatus.uploaded();
 
     this.addDomainEvent(
       new DocumentUploadedEvent(
