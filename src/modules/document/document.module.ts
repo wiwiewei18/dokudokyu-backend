@@ -12,6 +12,8 @@ import { CompleteDocumentUploadUseCase } from './app/useCases/completeDocumentUp
 import { EventBusModule } from 'src/shared/infra/eventBus/eventBus.module';
 import { MarkContentProcessingStartedUseCase } from './app/useCases/markContentProcessingStarted.useCase';
 import { ContentProcessingStartedSubscriber } from './subscriber/contentProcessingStarted.subscriber';
+import { ContentProcessingCompletedSubscriber } from './subscriber/contentProcessingCompleted.subscriber';
+import { MarkContentProcessingCompletedUseCase } from './app/useCases/markContentProcessingCompleted.useCase';
 
 @Module({
   imports: [DatabaseModule, EventBusModule.forRoot('document.exchange')],
@@ -33,8 +35,10 @@ import { ContentProcessingStartedSubscriber } from './subscriber/contentProcessi
     RequestDocumentUploadUseCase,
     CompleteDocumentUploadUseCase,
     MarkContentProcessingStartedUseCase,
+    MarkContentProcessingCompletedUseCase,
 
     ContentProcessingStartedSubscriber,
+    ContentProcessingCompletedSubscriber,
   ],
 })
 export class DocumentModule {}

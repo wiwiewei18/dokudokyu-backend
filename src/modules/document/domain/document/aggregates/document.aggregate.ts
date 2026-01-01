@@ -123,4 +123,11 @@ export class Document extends AggregateRoot<string> {
     }
     this.props.status = DocumentStatus.processing();
   }
+
+  public markContentProcessingCompleted(): void {
+    if (!this.props.status.isProcessing()) {
+      throw new Error('Document is not in processing status');
+    }
+    this.props.status = DocumentStatus.completed();
+  }
 }

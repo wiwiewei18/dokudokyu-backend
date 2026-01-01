@@ -38,6 +38,10 @@ export class DocumentStatus extends ValueObject<{
     return new DocumentStatus('PROCESSING');
   }
 
+  public isProcessing(): boolean {
+    return this.props.value === 'PROCESSING';
+  }
+
   public static completed(): DocumentStatus {
     return new DocumentStatus('COMPLETED');
   }
