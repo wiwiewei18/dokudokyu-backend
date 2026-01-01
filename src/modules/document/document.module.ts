@@ -14,9 +14,15 @@ import { MarkContentProcessingStartedUseCase } from './app/useCases/markContentP
 import { ContentProcessingStartedSubscriber } from './subscriber/contentProcessingStarted.subscriber';
 import { ContentProcessingCompletedSubscriber } from './subscriber/contentProcessingCompleted.subscriber';
 import { MarkContentProcessingCompletedUseCase } from './app/useCases/markContentProcessingCompleted.useCase';
+import { EventEmitterModule } from '@nestjs/event-emitter';
+import { StreamDocumentStatusUseCase } from './app/useCases/streamDocumentStatus.useCase';
 
 @Module({
-  imports: [DatabaseModule, EventBusModule.forRoot('document.exchange')],
+  imports: [
+    DatabaseModule,
+    EventBusModule.forRoot('document.exchange'),
+    EventEmitterModule.forRoot(),
+  ],
   controllers: [DocumentController],
   providers: [
     {
@@ -36,6 +42,7 @@ import { MarkContentProcessingCompletedUseCase } from './app/useCases/markConten
     CompleteDocumentUploadUseCase,
     MarkContentProcessingStartedUseCase,
     MarkContentProcessingCompletedUseCase,
+    StreamDocumentStatusUseCase,
 
     ContentProcessingStartedSubscriber,
     ContentProcessingCompletedSubscriber,
