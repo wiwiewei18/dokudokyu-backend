@@ -46,7 +46,6 @@ export class DocumentController {
     });
   }
 
-  @UseGuards(AuthenticationGuard)
   @Get(':documentId/stream-status')
   async streamDocumentStatus(
     @Param('documentId') documentId: string,
