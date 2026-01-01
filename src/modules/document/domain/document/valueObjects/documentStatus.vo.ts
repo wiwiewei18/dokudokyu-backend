@@ -30,6 +30,10 @@ export class DocumentStatus extends ValueObject<{
     return new DocumentStatus('UPLOADED');
   }
 
+  public isUploaded(): boolean {
+    return this.props.value === 'UPLOADED';
+  }
+
   public static processing(): DocumentStatus {
     return new DocumentStatus('PROCESSING');
   }

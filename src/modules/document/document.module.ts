@@ -10,6 +10,8 @@ import { IJwtServiceToken } from '../../shared/infra/auth/jwt/jwt.service.interf
 import { JwtService } from 'src/shared/infra/auth/jwt/jwt.service';
 import { CompleteDocumentUploadUseCase } from './app/useCases/completeDocumentUpload.useCase';
 import { EventBusModule } from 'src/shared/infra/eventBus/eventBus.module';
+import { MarkContentProcessingStartedUseCase } from './app/useCases/markContentProcessingStarted.useCase';
+import { ContentProcessingStartedSubscriber } from './subscriber/contentProcessingStarted.subscriber';
 
 @Module({
   imports: [DatabaseModule, EventBusModule.forRoot('document.exchange')],
@@ -27,8 +29,12 @@ import { EventBusModule } from 'src/shared/infra/eventBus/eventBus.module';
       provide: IJwtServiceToken,
       useClass: JwtService,
     },
+
     RequestDocumentUploadUseCase,
     CompleteDocumentUploadUseCase,
+    MarkContentProcessingStartedUseCase,
+
+    ContentProcessingStartedSubscriber,
   ],
 })
 export class DocumentModule {}

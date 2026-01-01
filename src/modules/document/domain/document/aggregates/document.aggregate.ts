@@ -116,4 +116,11 @@ export class Document extends AggregateRoot<string> {
       ),
     );
   }
+
+  public markContentProcessingStarted(): void {
+    if (!this.props.status.isUploaded()) {
+      throw new Error('Document is not in uploaded status');
+    }
+    this.props.status = DocumentStatus.processing();
+  }
 }
