@@ -1,6 +1,8 @@
 import { ConfigService } from '@nestjs/config';
 import { IStorageService } from '../storage.service.interface';
 import {
+  GetObjectCommand,
+  GetObjectCommandInput,
   HeadObjectCommand,
   HeadObjectCommandInput,
   PutObjectCommand,
@@ -44,8 +46,17 @@ export class R2StorageService implements IStorageService {
     };
     const command = new PutObjectCommand(commandInput);
 
-    const url = await getSignedUrl(this.s3Client, command, { expiresIn: 300 }); // 5 minutes
-    return url;
+    return getSignedUrl(this.s3Client, command, { expiresIn: 300 }); // 5 minutes
+  }
+
+  async generatePresignedReadUrl(storagePath: string): Promise<string> {
+    const commandInput: GetObjectCommandInput = {
+      Bucket: this.bucket,
+      Key: storagePath,
+    };
+    const command = new GetObjectCommand(commandInput);
+
+    return getSignedUrl(this.s3Client, command, { expiresIn: 300 }); // 5 minutes
   }
 
   async checkFileExists(storagePath: string): Promise<boolean> {

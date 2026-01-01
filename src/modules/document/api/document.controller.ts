@@ -15,6 +15,7 @@ import { CompleteDocumentUploadUseCase } from '../app/useCases/completeDocumentU
 import { CompleteDocumentUploadDto } from './dtos/completeDocumentUpload.dto';
 import { StreamDocumentStatusUseCase } from '../app/useCases/streamDocumentStatus.useCase';
 import { type Response } from 'express';
+import { GetDocumentPreviewUseCase } from '../app/useCases/getDocumentPreview.useCase';
 
 @Controller('document')
 export class DocumentController {
@@ -22,6 +23,7 @@ export class DocumentController {
     private readonly requestDocumentUploadUseCase: RequestDocumentUploadUseCase,
     private readonly completeDocumentUploadUseCase: CompleteDocumentUploadUseCase,
     private readonly streamDocumentStatusUseCase: StreamDocumentStatusUseCase,
+    private readonly getDocumentPreviewUseCase: GetDocumentPreviewUseCase,
   ) {}
 
   @UseGuards(AuthenticationGuard)
@@ -52,5 +54,13 @@ export class DocumentController {
     @Res() res: Response,
   ) {
     return this.streamDocumentStatusUseCase.execute({ documentId }, res);
+  }
+
+  @UseGuards(AuthenticationGuard)
+  @Get(':documentId/preview')
+  async getDocumentPreview(@Param('documentId') documentId: string) {
+    return this.getDocumentPreviewUseCase.execute({
+      documentId,
+    });
   }
 }
