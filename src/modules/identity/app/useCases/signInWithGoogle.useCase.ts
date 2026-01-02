@@ -12,7 +12,7 @@ import {
 import {
   IJwtServiceToken,
   type IJwtService,
-} from '../../domain/user/services/jwt.service.interface';
+} from '../../../../shared/infra/auth/jwt/jwt.service.interface';
 import { Inject, Injectable } from '@nestjs/common';
 
 @Injectable()
