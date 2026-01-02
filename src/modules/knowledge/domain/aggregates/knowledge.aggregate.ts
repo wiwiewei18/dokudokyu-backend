@@ -1,4 +1,5 @@
 import { AggregateRoot } from 'src/shared/domain/base.aggregate';
+import { KnowledgeStoredEvent } from '../events/knowledgeStored.event';
 
 interface KnowledgeProps {
   documentId: string;
@@ -31,6 +32,14 @@ export class Knowledge extends AggregateRoot<string> {
       summary: props.summary,
       createdAt: now,
     });
+
+    knowledge.addDomainEvent(
+      new KnowledgeStoredEvent(
+        props.documentId,
+        props.extractedContent,
+        props.summary,
+      ),
+    );
 
     return knowledge;
   }

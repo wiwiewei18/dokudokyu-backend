@@ -8,9 +8,10 @@ import { GetKnowledgeUseCase } from './app/useCases/getKnowledge.useCase';
 import { KnowledgeController } from './api/knowledge.controller';
 import { IJwtServiceToken } from 'src/shared/infra/auth/jwt/jwt.service.interface';
 import { JwtService } from 'src/shared/infra/auth/jwt/jwt.service';
+import { EventBusModule } from 'src/shared/infra/eventBus/eventBus.module';
 
 @Module({
-  imports: [DatabaseModule],
+  imports: [DatabaseModule, EventBusModule.forRoot('knowledge.exchange')],
   controllers: [KnowledgeController],
   providers: [
     {
