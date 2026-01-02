@@ -35,6 +35,21 @@ export class Knowledge extends AggregateRoot<string> {
     return knowledge;
   }
 
+  static fromPersistence(props: {
+    id: string;
+    documentId: string;
+    extractedContent: string;
+    summary: string;
+    createdAt: Date;
+  }) {
+    return new Knowledge(props.id, {
+      documentId: props.documentId,
+      extractedContent: props.extractedContent,
+      summary: props.summary,
+      createdAt: props.createdAt,
+    });
+  }
+
   get id(): string {
     return this._id;
   }
