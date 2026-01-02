@@ -15,21 +15,11 @@ export class ContentProcessingCompletedSubscriber {
     documentId: string;
     extractedContent: string;
     summary: string;
-    keywords: string[];
-    importantDates: {
-      date: string;
-      type: 'deadline' | 'meeting' | 'payment' | 'event' | 'other';
-      description: string;
-    }[];
-    actions: string[];
   }) {
     await this.storeKnowledgeUseCase.execute({
       documentId: event.documentId,
       extractedContent: event.extractedContent,
       summary: event.summary,
-      keywords: event.keywords,
-      importantDates: event.importantDates,
-      actions: event.actions,
     });
   }
 }

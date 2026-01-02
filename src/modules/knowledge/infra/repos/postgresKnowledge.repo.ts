@@ -30,9 +30,6 @@ export class PostgresKnowledgeRepo implements IKnowledgeRepo {
           documentId: knowledge.documentId,
           extractedContent: knowledge.extractedContent,
           summary: knowledge.summary,
-          keywords: JSON.stringify(knowledge.keywords),
-          importantDates: JSON.stringify(knowledge.importantDates),
-          actions: JSON.stringify(knowledge.actions),
         })
         .where(eq(knowledgeTable.id, knowledge.id));
     } else {
@@ -41,10 +38,7 @@ export class PostgresKnowledgeRepo implements IKnowledgeRepo {
         documentId: knowledge.documentId,
         extractedContent: knowledge.extractedContent,
         summary: knowledge.summary,
-        keywords: JSON.stringify(knowledge.keywords),
-        importantDates: JSON.stringify(knowledge.importantDates),
-        actions: JSON.stringify(knowledge.actions),
-        createdAt: new Date(),
+        createdAt: knowledge.createdAt,
       });
     }
   }

@@ -21,7 +21,7 @@ export class StreamDocumentStatusUseCase {
     let counter = 0;
     const sendEvent = (status: string, payload?: any) => {
       counter++;
-      const data = JSON.stringify({ status, ...payload });
+      const data = JSON.stringify({ status, payload });
       res.write(`id: ${counter}\ndata: ${data}\n\n`);
     };
 

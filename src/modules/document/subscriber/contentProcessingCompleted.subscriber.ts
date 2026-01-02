@@ -19,13 +19,6 @@ export class ContentProcessingCompletedSubscriber {
     documentId: string;
     extractedContent: string;
     summary: string;
-    keywords: string[];
-    importantDates: {
-      date: string;
-      type: 'deadline' | 'meeting' | 'payment' | 'event' | 'other';
-      description: string;
-    }[];
-    actions: string[];
   }) {
     await this.markContentProcessingCompletedUseCase.execute({
       documentId: event.documentId,
@@ -36,9 +29,6 @@ export class ContentProcessingCompletedSubscriber {
       payload: {
         extractedContent: event.extractedContent,
         summary: event.summary,
-        keywords: event.keywords,
-        importantDates: event.importantDates,
-        actions: event.actions,
       },
     });
   }

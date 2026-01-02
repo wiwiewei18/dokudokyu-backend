@@ -22,6 +22,13 @@
       "when": 1767242402754,
       "tag": "0002_daffy_the_executioner",
       "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1767317245332,
+      "tag": "0003_thick_dazzler",
+      "breakpoints": true
     }
   ]
 }
