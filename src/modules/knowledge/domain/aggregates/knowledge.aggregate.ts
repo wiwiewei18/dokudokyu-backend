@@ -1,0 +1,81 @@
+import { AggregateRoot } from 'src/shared/domain/base.aggregate';
+import { KnowledgeStoredEvent } from '../events/knowledgeStored.event';
+
+interface KnowledgeProps {
+  documentId: string;
+  extractedContent: string;
+  summary: string;
+  createdAt: Date;
+}
+
+export class Knowledge extends AggregateRoot<string> {
+  private _id: string;
+  private props: KnowledgeProps;
+
+  private constructor(id: string, props: KnowledgeProps) {
+    super();
+    this._id = id;
+    this.props = props;
+  }
+
+  public static create(props: {
+    documentId: string;
+    extractedContent: string;
+    summary: string;
+  }): Knowledge {
+    const id = crypto.randomUUID();
+    const now = new Date();
+
+    const knowledge = new Knowledge(id, {
+      documentId: props.documentId,
+      extractedContent: props.extractedContent,
+      summary: props.summary,
+      createdAt: now,
+    });
+
+    knowledge.addDomainEvent(
+      new KnowledgeStoredEvent(
+        props.documentId,
+        props.extractedContent,
+        props.summary,
+      ),
+    );
+
+    return knowledge;
+  }
+
+  static fromPersistence(props: {
+    id: string;
+    documentId: string;
+    extractedContent: string;
+    summary: string;
+    createdAt: Date;
+  }) {
+    return new Knowledge(props.id, {
+      documentId: props.documentId,
+      extractedContent: props.extractedContent,
+      summary: props.summary,
+      createdAt: props.createdAt,
+    });
+  }
+
+  get id(): string {
+    return this._id;
+  }
+
+  get documentId(): string {
+    return this.props.documentId;
+  }
+
+  get extractedContent(): string {
+    return this.props.extractedContent;
+  }
+
+  get summary(): string {
+    return this.props.summary;
+  }
+
+  get createdAt(): Date {
+    return this.props.createdAt;
+  }
+}
