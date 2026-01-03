@@ -1,4 +1,5 @@
 import { AggregateRoot } from 'src/shared/domain/base.aggregate';
+import { KnowledgeStoredEvent } from '../events/knowledgeStored.event';
 
 interface KnowledgeProps {
   documentId: string;
@@ -32,7 +33,30 @@ export class Knowledge extends AggregateRoot<string> {
       createdAt: now,
     });
 
+    knowledge.addDomainEvent(
+      new KnowledgeStoredEvent(
+        props.documentId,
+        props.extractedContent,
+        props.summary,
+      ),
+    );
+
     return knowledge;
+  }
+
+  static fromPersistence(props: {
+    id: string;
+    documentId: string;
+    extractedContent: string;
+    summary: string;
+    createdAt: Date;
+  }) {
+    return new Knowledge(props.id, {
+      documentId: props.documentId,
+      extractedContent: props.extractedContent,
+      summary: props.summary,
+      createdAt: props.createdAt,
+    });
   }
 
   get id(): string {

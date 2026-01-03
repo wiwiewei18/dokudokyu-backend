@@ -46,6 +46,26 @@ export class PostgresDocumentRepo implements IDocumentRepo {
     });
   }
 
+  async findAllByUserId(userId: string): Promise<Document[]> {
+    const rows = await this.db
+      .select()
+      .from(documentTable)
+      .where(eq(documentTable.userId, userId));
+
+    return rows.map((row) =>
+      Document.fromPersistence({
+        id: row.id,
+        userId: UserId.create(row.userId),
+        name: DocumentName.create(row.name),
+        type: DocumentType.create(row.type),
+        size: DocumentSize.create(row.size),
+        storagePath: row.storagePath,
+        status: DocumentStatus.create(row.status as DocumentStatusType),
+        createdAt: row.createdAt,
+      }),
+    );
+  }
+
   async save(document: Document): Promise<void> {
     const exists = await this.findById(document.id);
 

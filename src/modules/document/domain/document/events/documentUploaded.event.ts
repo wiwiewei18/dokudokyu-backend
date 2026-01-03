@@ -5,6 +5,7 @@ export class DocumentUploadedEvent extends DomainEvent {
     public readonly documentId: string,
     public readonly storagePath: string,
     public readonly type: string,
+    public readonly name: string,
   ) {
     super();
   }

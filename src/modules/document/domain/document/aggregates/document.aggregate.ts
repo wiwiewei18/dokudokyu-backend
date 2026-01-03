@@ -113,6 +113,7 @@ export class Document extends AggregateRoot<string> {
         this._id,
         this.props.storagePath,
         this.props.type.value,
+        this.props.name.value,
       ),
     );
   }

@@ -16,6 +16,7 @@ import { CompleteDocumentUploadDto } from './dtos/completeDocumentUpload.dto';
 import { StreamDocumentStatusUseCase } from '../app/useCases/streamDocumentStatus.useCase';
 import { type Response } from 'express';
 import { GetDocumentPreviewUseCase } from '../app/useCases/getDocumentPreview.useCase';
+import { GetDocumentListUseCase } from '../app/useCases/getDocumentList.useCase';
 
 @Controller('document')
 export class DocumentController {
@@ -24,7 +25,14 @@ export class DocumentController {
     private readonly completeDocumentUploadUseCase: CompleteDocumentUploadUseCase,
     private readonly streamDocumentStatusUseCase: StreamDocumentStatusUseCase,
     private readonly getDocumentPreviewUseCase: GetDocumentPreviewUseCase,
+    private readonly getDocumentListUseCase: GetDocumentListUseCase,
   ) {}
+
+  @UseGuards(AuthenticationGuard)
+  @Get('')
+  async getDocumentList(@Req() req) {
+    return this.getDocumentListUseCase.execute({ userId: req.user.userId });
+  }
 
   @UseGuards(AuthenticationGuard)
   @Post('upload/request')

@@ -17,6 +17,24 @@ export class PostgresKnowledgeRepo implements IKnowledgeRepo {
     return this.databaseService.getClient();
   }
 
+  async findByDocumentId(documentId: string): Promise<Knowledge | null> {
+    const rows = await this.db
+      .select()
+      .from(knowledgeTable)
+      .where(eq(knowledgeTable.documentId, documentId));
+    if (!rows.length) return null;
+
+    const row = rows[0];
+
+    return Knowledge.fromPersistence({
+      id: row.id,
+      documentId: row.documentId,
+      extractedContent: row.extractedContent,
+      summary: row.summary,
+      createdAt: row.createdAt,
+    });
+  }
+
   async save(knowledge: Knowledge): Promise<void> {
     const exists = await this.db
       .select()

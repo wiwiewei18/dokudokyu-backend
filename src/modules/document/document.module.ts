@@ -17,6 +17,7 @@ import { MarkContentProcessingCompletedUseCase } from './app/useCases/markConten
 import { EventEmitterModule } from '@nestjs/event-emitter';
 import { StreamDocumentStatusUseCase } from './app/useCases/streamDocumentStatus.useCase';
 import { GetDocumentPreviewUseCase } from './app/useCases/getDocumentPreview.useCase';
+import { GetDocumentListUseCase } from './app/useCases/getDocumentList.useCase';
 
 @Module({
   imports: [
@@ -45,6 +46,7 @@ import { GetDocumentPreviewUseCase } from './app/useCases/getDocumentPreview.use
     MarkContentProcessingCompletedUseCase,
     StreamDocumentStatusUseCase,
     GetDocumentPreviewUseCase,
+    GetDocumentListUseCase,
 
     ContentProcessingStartedSubscriber,
     ContentProcessingCompletedSubscriber,
